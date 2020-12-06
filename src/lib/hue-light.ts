@@ -1,6 +1,9 @@
 "use strict";
+
+import { isPlainObject, isFinite } from "lodash";
+import { IConfig } from "../contracts";
+
 var nodeHueApi = require('node-hue-api');
-var _          = require('lodash');
 var Enum       = require('enum');
 
 var inherits      = require('util').inherits;
@@ -28,9 +31,9 @@ const LightCapability = new Enum([
  * @param  {?number} config.gamma Should we do gamma correction (default true)
  * @return {array} The xy value
  */
-function convertRGB2HueXY(rgb, config) {
+function convertRGB2HueXY(rgb: [number, number, number], config: IConfig = {}) {
   // Convert input values if needed
-  if (_.isPlainObject(config) && _.isFinite(config.divide)) {
+  if (config.divide != null && isFinite(config.divide)) {
     rgb = [
       rgb[0] / config.divide,
       rgb[1] / config.divide,
@@ -78,7 +81,7 @@ function convertRGB2HueXY(rgb, config) {
  * @param  {?number} config.gamma Should we do gamma correction (default true)
  * @return {array} The RGB value
  */
-function convertHueXY2RGB(xy, bri, config) {
+function convertHueXY2RGB(xy: [number, number], bri: number, config: IConfig = {}) {
   // Convert to XYZ
   var XYZ = [
     (bri / xy[1]) * xy[0],
@@ -110,7 +113,7 @@ function convertHueXY2RGB(xy, bri, config) {
   ];
 
   // Convert output values
-  if (_.isPlainObject(config) && _.isFinite(config.multiply)) {
+  if (config.multiply != null && isFinite(config.multiply)) {
     rgb = [
       rgb[0] * config.multiply,
       rgb[1] * config.multiply,
@@ -123,7 +126,7 @@ function convertHueXY2RGB(xy, bri, config) {
 
 // Table mapping "Model ID" to "Product Name"
 var HueModelInfo = (function() {
-  var retVal = {};
+  var retVal: Record<string, string> = {};
   
   /**
    * Create "Model ID" to "Product Name" mapping
@@ -131,7 +134,7 @@ var HueModelInfo = (function() {
    * @param  {string} type Device ID
    * @param  {string} id   Model ID
    */
-  function parseModelInfo(name, type, id) {
+  function parseModelInfo(name: string, _type: string, id: string) {
     id.split(/ *, */).forEach((hwID)=> {
       retVal[hwID] = name;
     });
@@ -197,7 +200,7 @@ function calculateCapabilties(state) {
  * @param  {number} max Max value
  * @return {number} Limited value
  */
-function limitValue(val, min, max) {
+function limitValue(val: number, min: number, max: number) {
   if (_.isNaN(val))
     val = min;
   if (val > max)

@@ -1,3 +1,4 @@
 {
-    "window.title": "node-red-contrib-node-hue ${dirty}${activeEditorShort}${separator}${rootName}${separator}${appName}"
+    "window.title": "node-red-contrib-node-hue ${dirty}${activeEditorShort}${separator}${rootName}${separator}${appName}",
+    "editor.tabSize": 4
 }

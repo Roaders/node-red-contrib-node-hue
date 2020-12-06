@@ -107,24 +107,30 @@ function LightServer(config) {
   // List of all lights
   this.lights = {};
 
+  console.log(`Server creating api`);
+
   // Create new API
-  this.hueApi = new nodeHueApi.HueApi(this.config.address, this.config.key, null, this.config.port);
+  nodeHueApi.v3.api.createLocal(this.config.address, this.config.port).connect(this.config.key).then(function(api){
+    console.log(`Server created api`);
+    self.hueApi = api;
 
-  // Create wrapper function for setLightState
-  this.hueApiSetLightState = function setLightState(id, state) {
-    self.hueApi.setLightState(id, state, function(err) {
-      if (err)
-        self.emit('warning', err.message);
-    });
-  };
+    // Create wrapper function for setLightState
+    self.hueApiSetLightState = function setLightState(id, state) {
+      self.hueApi.setLightState(id, state, function(err) {
+        if (err)
+          self.emit('warning', err.message);
+      });
+    };
 
-  // Create wrapper function for setGroupLightState
-  this.hueApiSetGroupLightState = function setGroupLightState(id, state) {
-    self.hueApi.setGroupLightState(id, state, function(err) {
-      if (err)
-        self.emit('warning', err.message);
-    });
-  };
+    // Create wrapper function for setGroupLightState
+    self.hueApiSetGroupLightState = function setGroupLightState(id, state) {
+      self.hueApi.setGroupLightState(id, state, function(err) {
+        if (err)
+          self.emit('warning', err.message);
+      });
+    };
+
+  });
 
   this.lightPollInterval = null;
 }
@@ -200,6 +206,8 @@ LightServer.prototype.pollChanges = function pollChanges(callback) {
       }
     });
   }
+
+  console.log(`Polling for light changes`)
 
   // First request lights information
   this.hueApi.lights((lightsErr, lightsInfo) => {

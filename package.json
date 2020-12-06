@@ -1,45 +1,50 @@
 {
-  "name": "node-red-contrib-node-hue",
-  "version": "0.9.5",
-  "description": "Control Philips HUE lights using Node-RED.",
-  "author": "jdomeij",
-  "homepage": "https://github.com/jdomeij/node-red-contrib-node-hue",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/jdomeij/node-red-contrib-node-hue.git"
-  },
-  "bugs": {
-    "url": "https://github.com/jdomeij/node-red-contrib-node-hue/issues"
-  },
-  "keywords": [
-    "node-red",
-    "node-red-contrib",
-    "contrib",
-    "hue"
-  ],
-  "node-red": {
-    "nodes": {
-      "node-hue-out": "red/hue-output.js",
-      "node-hue-in": "red/hue-input.js",
-      "node-hue-bridge": "red/hue-bridge.js"
+    "name": "node-red-contrib-node-hue",
+    "version": "0.9.5",
+    "description": "Control Philips HUE lights using Node-RED.",
+    "author": "jdomeij",
+    "homepage": "https://github.com/jdomeij/node-red-contrib-node-hue",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/jdomeij/node-red-contrib-node-hue.git"
+    },
+    "bugs": {
+        "url": "https://github.com/jdomeij/node-red-contrib-node-hue/issues"
+    },
+    "keywords": [
+        "node-red",
+        "node-red-contrib",
+        "contrib",
+        "hue"
+    ],
+    "node-red": {
+        "nodes": {
+            "node-hue-out": "red/hue-output.js",
+            "node-hue-in": "red/hue-input.js",
+            "node-hue-bridge": "red/hue-bridge.js"
+        }
+    },
+    "main": "lib/hue-server.js",
+    "license": "Apache-2.0",
+    "devDependencies": {
+        "@types/lodash": "^4.14.165",
+        "@types/node": "^14.14.10",
+        "chai": "^4.1.0",
+        "chai-spies": "^1.0.0",
+        "mocha": "^5.2.0",
+        "typescript": "^4.1.2"
+    },
+    "dependencies": {
+        "color-convert": "^1.9.2",
+        "color-space": "^1.16.0",
+        "color-temp": "0.0.2",
+        "enum": "^2.5.0",
+        "lodash": "^4.17.10",
+        "node-hue-api": "^4.0.9"
+    },
+    "scripts": {
+        "test": "mocha test",
+        "build": "tsc",
+        "watch-build": "tsc --watch"
     }
-  },
-  "main": "lib/hue-server.js",
-  "license": "Apache-2.0",
-  "devDependencies": {
-    "chai": "^4.1.0",
-    "chai-spies": "^1.0.0",
-    "mocha": "^5.2.0"
-  },
-  "dependencies": {
-    "color-convert": "^1.9.2",
-    "color-space": "^1.16.0",
-    "color-temp": "0.0.2",
-    "enum": "^2.5.0",
-    "lodash": "^4.17.10",
-    "node-hue-api": "^2.4.1"
-  },
-  "scripts": {
-    "test": "mocha test"
-  }
 }

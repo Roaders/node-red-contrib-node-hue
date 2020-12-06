@@ -121,6 +121,8 @@ module.exports = function(RED) {
       port = parseInt(regex[2], 10);
     }
 
+    console.log(`BRIDGE CREATING NEW API`);
+
     var hue = new nodeHueApi.HueApi(address, req.query.key, 2000, port);
     hue.config()
       .then((result) => {
